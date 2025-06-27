@@ -1,0 +1,12 @@
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+nav svg {
+    width: 2rem;
+    height: 2rem;
+    fill: #fff;
+}
