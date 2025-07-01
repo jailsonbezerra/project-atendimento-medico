@@ -7,7 +7,7 @@ import './nav.css';
 
 export default function Nav() {
   return (
-    <nav>
+    <nav className="menu-navegacao">
         <Link to='/'><FontAwesomeIcon icon={faHome} />Home</Link>
         <Link to='/cadastro'><FontAwesomeIcon icon={faUserPlus} />Cadastro</Link>
         <Link to='/triagem'><FontAwesomeIcon icon={faNotesMedical} /> Triagem</Link>

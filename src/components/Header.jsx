@@ -7,7 +7,7 @@ import './header.css';
 
 export default function Header() {
   return (
-    <header>
+    <header className="header">
         <h1><FontAwesomeIcon icon={faHospital} />Fluxo de Atendimento Médico</h1>
 
         <hr />
