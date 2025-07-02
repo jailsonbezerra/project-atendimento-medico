@@ -74,6 +74,7 @@ export default function Triagem() {
       delete novoPaciente.emTriagem;
       todos[idxGeral] = novoPaciente;
       localStorage.setItem('pacientes', JSON.stringify(todos));
+      window.dispatchEvent(new Event('storage'));
     }
     // Atualiza a lista imediatamente após salvar
     setPacientes(todos.filter(p => !p.triagem));

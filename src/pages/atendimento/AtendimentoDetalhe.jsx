@@ -50,7 +50,7 @@ export default function AtendimentoDetalhe({ paciente, onVoltar, onSalvar }) {
   return (
     <div className="atendimento-detalhe-modal">
       <div className="atendimento-detalhe-content">
-        <button className="fechar" onClick={onVoltar}>×</button>
+        <button className="fechar" onClick={onVoltar} title="Fechar">×</button>
         <h2>Atendimento de {paciente.nome}</h2>
         <div className="info-basica-atendimento" style={{
           background: '#f5f9ff',
@@ -71,7 +71,7 @@ export default function AtendimentoDetalhe({ paciente, onVoltar, onSalvar }) {
           <div><b>Pressão:</b> {triagem.pressao || '-'}</div>
           <div><b>IMC:</b> {calcularIMC(triagem.peso, triagem.altura)}</div>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <label>Motivo da Consulta:</label>
           <input type="text" name="motivo" value={form.motivo} onChange={handleChange} required />
 

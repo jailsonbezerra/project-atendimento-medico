@@ -21,6 +21,21 @@
   flex-direction: column;
   align-items: center;
   animation: fadeInModal 0.3s;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2563eb #e3e9f6;
+}
+
+.atendimento-detalhe-content::-webkit-scrollbar {
+  width: 8px;
+  background: #e3e9f6;
+  border-radius: 8px;
+}
+
+.atendimento-detalhe-content::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 8px;
 }
 
 .atendimento-detalhe-content h2 {
