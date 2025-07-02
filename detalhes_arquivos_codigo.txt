@@ -1,0 +1,249 @@
+Arquivo gerado automaticamente com exemplos de código e explicação de funcionalidades dos principais arquivos de detalhes do projeto.
+
+---
+
+# src/pages/triagem/TriagemDetalhe.jsx
+
+```jsx
+import { useEffect, useState } from 'react';
+import './TriagemDetalhe.css';
+import PacienteInfo from './components/PacienteInfo';
+import PrioridadeTriagem from './components/PrioridadeTriagem';
+
+const prioridades = [
+  { label: 'Urgente', cor: 'vermelho' },
+  { label: 'Moderado', cor: 'amarelo' },
+  { label: 'Normal', cor: 'verde' },
+];
+
+export default function TriagemDetalhe({ paciente, onVoltar, onSalvar }) {
+  const [form, setForm] = useState({
+    temperatura: '',
+    pressao: '',
+    peso: '',
+    altura: '',
+    observacao: '',
+    prioridade: paciente?.prioridade || 'Normal',
+  });
+
+  useEffect(() => {
+    // Preenche com dados já existentes, se houver
+    if (paciente?.triagem) {
+      setForm({
+        temperatura: paciente.triagem.temperatura || '',
+        pressao: paciente.triagem.pressao || '',
+        peso: paciente.triagem.peso || '',
+        altura: paciente.triagem.altura || '',
+        observacao: paciente.triagem.observacao || '',
+        prioridade: paciente.triagem.prioridade || paciente.prioridade || 'Normal',
+      });
+    }
+  }, [paciente]);
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+  }
+
+  function handlePrioridade(prioridade) {
+    setForm(prev => ({ ...prev, prioridade }));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // Validação simples
+    if (!form.temperatura || !form.pressao || !form.peso || !form.altura) {
+      alert('Preencha todos os campos obrigatórios!');
+      return;
+    }
+    onSalvar(form);
+  }
+
+  if (!paciente) return null;
+
+  return (
+    <div className="triagem-detalhe-modal">
+      <div className="triagem-detalhe-content">
+        <button className="fechar" onClick={onVoltar}>×</button>
+        <h2>Triagem de {paciente.nome}</h2>
+        <PacienteInfo nome={paciente.nome} dataNascimento={paciente.dataNascimento} sexo={paciente.sexo} />
+        <form onSubmit={handleSubmit} autoComplete="off">
+          <div className="input-row">
+            <div className="input-group">
+              <label>Temperatura (°C):</label>
+              <input type="number" step="0.1" name="temperatura" value={form.temperatura} onChange={handleChange} required placeholder="Ex: 36.7" />
+            </div>
+            <div className="input-group">
+              <label>Pressão (mmHg):</label>
+              <input type="text" name="pressao" value={form.pressao} onChange={handleChange} required placeholder="Ex: 12/8" />
+            </div>
+          </div>
+          <div className="input-row">
+            <div className="input-group">
+              <label>Peso (kg):</label>
+              <input type="number" step="0.1" name="peso" value={form.peso} onChange={handleChange} required placeholder="Ex: 70.5" />
+            </div>
+            <div className="input-group">
+              <label>Altura (cm):</label>
+              <input type="number" step="0.1" name="altura" value={form.altura} onChange={handleChange} required placeholder="Ex: 175" />
+            </div>
+          </div>
+          <label>Observação:</label>
+          <textarea name="observacao" value={form.observacao} onChange={handleChange} rows={3} placeholder="Observações relevantes..." />
+
+          <div className="botoes-triagem-row">
+            <label className="label-reclassificar">Reclassificar Prioridade:</label>
+            <PrioridadeTriagem prioridades={prioridades} prioridadeAtual={form.prioridade} onChange={handlePrioridade} />
+            <button type="submit" className="salvar-btn-triagem">Salvar Triagem</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+```
+
+**Funcionalidade:**
+- Formulário de triagem do paciente.
+- Exibe dados básicos, campos de sinais vitais, observação e prioridade.
+- Permite reclassificação de prioridade e salvar os dados.
+- Modal pode ser fechado pelo botão "X".
+
+---
+
+# src/pages/triagem/components/PacienteInfo.jsx
+
+```jsx
+import { calcularIdade } from '../../../utils/date';
+
+export default function PacienteInfo({ nome, dataNascimento, sexo }) {
+  return (
+    <div className="paciente-info">
+      <span><b>Nome:</b> {nome}</span>
+      <span><b>Idade:</b> {calcularIdade(dataNascimento)}</span>
+      <span><b>Sexo:</b> {sexo || '-'}</span>
+    </div>
+  );
+}
+```
+
+**Funcionalidade:**
+- Exibe nome, idade (calculada) e sexo do paciente de forma clara e responsiva.
+
+---
+
+# src/pages/triagem/components/PrioridadeTriagem.jsx
+
+```jsx
+export default function PrioridadeTriagem({ prioridades, prioridadeAtual, onChange }) {
+  return (
+    <div className="prioridade-triagem">
+      {prioridades.map((p) => (
+        <button
+          type="button"
+          key={p.label}
+          className={
+            'prioridade-btn ' +
+            p.cor +
+            (prioridadeAtual === p.label ? ' active' : '')
+          }
+          onClick={() => onChange(p.label)}
+        >
+          <span>{p.label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+**Funcionalidade:**
+- Renderiza os botões de prioridade (Urgente, Moderado, Normal) e destaca o selecionado.
+- Permite reclassificação de prioridade de forma visual e acessível.
+
+---
+
+# src/utils/date.js
+
+```js
+export function calcularIdade(dataNascimento) {
+  if (!dataNascimento) return '-';
+  const hoje = new Date();
+  const nasc = new Date(dataNascimento);
+  let idade = hoje.getFullYear() - nasc.getFullYear();
+  const m = hoje.getMonth() - nasc.getMonth();
+  if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) {
+    idade--;
+  }
+  return idade;
+}
+```
+
+**Funcionalidade:**
+- Calcula a idade a partir da data de nascimento.
+
+---
+
+# src/pages/triagem/TriagemDetalhe.css
+
+```css
+.triagem-detalhe-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInBg 0.3s;
+}
+
+.triagem-detalhe-content {
+  background: #fafdff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px #2563eb22, 0 2px 8px #2563eb11;
+  padding: 2.2rem 2.5rem 2rem 2.5rem;
+  min-width: 340px;
+  max-width: 98vw;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInModal 0.3s;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2563eb #e3e9f6;
+}
+// ... (demais regras de layout, responsividade, botões e campos)
+```
+
+**Funcionalidade:**
+- Define o layout, responsividade e visual do modal de triagem.
+- Estiliza campos, botões, barra de rolagem e separação de seções.
+
+---
+
+# src/hooks/useFormFields.js
+
+```js
+import { useState } from 'react';
+
+export function useFormFields(initialState) {
+  const [fields, setFields] = useState(initialState);
+  const handleFieldChange = e => {
+    const { name, value } = e.target;
+    setFields(prev => ({ ...prev, [name]: value }));
+  };
+  return [fields, handleFieldChange, setFields];
+}
+```
+
+**Funcionalidade:**
+- Hook customizado para controle de campos de formulário.
+- Facilita o gerenciamento de estados de formulários controlados.
+
+---
+
+Para mais detalhes, consulte o README.md do projeto ou os próprios arquivos fonte.

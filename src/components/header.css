@@ -12,6 +12,10 @@ header.header {
 header.header h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    color: var(--primary-blue);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 header.header h1 svg {
@@ -26,6 +30,8 @@ header.header hr {
     background-color: var(--primary-blue);
 }
 
-header.header h1 {
-    color: var(--primary-blue);
+.header-icon {
+    color: var(--accent-red);
+    font-size: 2.2rem;
+    margin-right: 0.5rem;
 }
