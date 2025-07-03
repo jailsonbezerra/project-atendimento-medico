@@ -31,7 +31,8 @@ export default function CadastroPaciente() {
   function handleSubmit(e) {
     e.preventDefault();
     const pacientes = JSON.parse(localStorage.getItem('pacientes') || '[]');
-    pacientes.push(form);
+    // Garante que todos os pacientes cadastrados NÃO tenham campo triagem nem atendimento
+    pacientes.push({ ...form, triagem: undefined, atendimento: undefined });
     localStorage.setItem('pacientes', JSON.stringify(pacientes));
     alert('Paciente cadastrado com sucesso!');
     setForm({
