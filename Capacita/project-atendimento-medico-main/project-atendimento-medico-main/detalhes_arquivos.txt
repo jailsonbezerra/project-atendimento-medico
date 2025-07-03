@@ -1,0 +1,48 @@
+Arquivo gerado automaticamente com detalhes dos principais arquivos de detalhes do projeto.
+
+---
+
+# src/pages/triagem/TriagemDetalhe.jsx
+- Componente React responsável pelo formulário de triagem do paciente.
+- Exibe informações básicas do paciente (nome, idade, sexo).
+- Permite o registro de temperatura, pressão, peso, altura e observação.
+- Possui botões para reclassificação de prioridade (Urgente, Moderado, Normal).
+- Botão "Salvar Triagem" destacado e responsivo.
+- Modal pode ser fechado pelo botão "X" no topo direito.
+- Utiliza componentes reutilizáveis: PacienteInfo, PrioridadeTriagem.
+- Segue boas práticas de componentização e organização visual.
+
+# src/pages/triagem/TriagemDetalhe.css
+- Estilização do modal de triagem.
+- Layout responsivo com media queries.
+- Destaque visual para botões de prioridade e botão salvar.
+- Barra de rolagem interna para o modal.
+- Separação visual clara entre seções.
+- Aparência moderna para campos e botões.
+
+# src/pages/triagem/components/PacienteInfo.jsx
+- Componente para exibir informações básicas do paciente.
+- Utiliza função utilitária para calcular idade.
+- Visual limpo e responsivo.
+
+# src/pages/triagem/components/PrioridadeTriagem.jsx
+- Componente para renderizar os botões de reclassificação de prioridade.
+- Recebe prioridades, prioridade atual e callback para alteração.
+- Visual padronizado e responsivo.
+
+# src/utils/date.js
+- Função utilitária para calcular idade a partir da data de nascimento.
+
+# src/hooks/useFormFields.js
+- Hook customizado para controle de campos de formulário.
+- Facilita o gerenciamento de estados de formulários.
+
+# Estrutura geral
+- Componentes e utilitários organizados por responsabilidade.
+- CSS modularizado por página/componente.
+- Código limpo, sem lógica inline desnecessária.
+- Responsividade garantida em todas as telas.
+
+---
+
+Para mais detalhes, consulte o README.md do projeto ou os próprios arquivos fonte.

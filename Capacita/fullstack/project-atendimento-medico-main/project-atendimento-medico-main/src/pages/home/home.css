@@ -1,0 +1,106 @@
+@import '../../index.css';
+
+main.home {
+    padding-top: calc(100vh / 7);
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.home-icons {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 18px;
+    justify-content: center;
+}
+
+.icon-hospital {
+    color: var(--primary-blue);
+    font-size: 2.7rem;
+}
+.icon-doctor {
+    color: var(--secondary-green);
+    font-size: 2.7rem;
+}
+.icon-patient {
+    color: var(--accent-yellow);
+    font-size: 2.7rem;
+}
+.icon-heart {
+    color: var(--accent-red);
+    font-size: 2.7rem;
+}
+
+@keyframes gentlePulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.gentle-pulse {
+  animation: gentlePulse 3s infinite;
+}
+
+.home-resumo {
+    margin: 18px 0 10px 0;
+    font-size: 1.08em;
+    color: var(--text-medium);
+    max-width: 500px;
+}
+
+.home-versao {
+    font-size: 1.1em;
+    color: var(--primary-dark-blue);
+    margin-bottom: 10px;
+}
+
+.footer {
+    width: 100vw;
+    background: var(--primary-dark-blue);
+    color: var(--white);
+    text-align: center;
+    padding: 16px 0 10px 0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+    z-index: 100;
+}
+@media (max-width: 600px) {
+  .home-resumo { font-size: 0.98em; }
+  .footer { font-size: 0.95em; padding: 12px 0 8px 0; }
+}
+
+.home-participantes {
+    margin: 10px 0 10px 0;
+    font-size: 1.05em;
+    color: var(--text-dark);
+    max-width: 500px;
+    background: var(--white);
+    border-radius: 8px;
+    padding: 12px 18px 10px 18px;
+    box-shadow: 0 1px 4px rgba(42,92,141,0.07);
+}
+.home-participantes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.home-participantes li {
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+}
+.icon-link {
+    color: var(--primary-blue);
+    font-size: 1.2em;
+    margin-left: 0.3em;
+    transition: color 0.2s;
+}
+.icon-link:hover {
+    color: var(--secondary-green);
+}
