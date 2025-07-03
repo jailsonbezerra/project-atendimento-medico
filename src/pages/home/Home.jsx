@@ -72,9 +72,6 @@ export function Home() {
         <p className="home-versao">Versão 2.0 REFATORADO</p>
         <p>Selecione um módulo acima para iniciar o atendimento ao paciente.</p>
       </main>
-      <footer className="footer">
-        <span>© {new Date().getFullYear()} Projeto Hospitalar | Desenvolvido para fins acadêmicos Avanti</span>
-      </footer>
     </>
   )
 }

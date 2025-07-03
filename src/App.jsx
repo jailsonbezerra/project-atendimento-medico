@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import { Home } from './pages/home/Home'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import CadastroPaciente from './pages/cadastro/CadastroPaciente'
 import Triagem from './pages/triagem/Triagem'
 import Atendimento from './pages/atendimento/Atendimento'
@@ -20,6 +21,8 @@ function App() {
         <Route path='/atendimento' element={<Atendimento />} />
         <Route path='/painel' element={<PainelSituacao />} />
       </Routes>
+
+      <Footer />
     </BrowserRouter>
   )
 }
