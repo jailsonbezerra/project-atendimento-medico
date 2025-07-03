@@ -49,7 +49,8 @@ export default function TriagemDetalhe({ paciente, onVoltar, onSalvar }) {
       alert('Preencha todos os campos obrigatórios!');
       return;
     }
-    onSalvar(form);
+    // Sempre envia a prioridade selecionada, mesmo que igual à anterior
+    onSalvar({ ...form, prioridade: form.prioridade });
   }
 
   if (!paciente) return null;

@@ -29,6 +29,16 @@ export default function Triagem() {
     setPacientes(data.filter(p => !p.triagem));
   }, [showDetalhe]);
 
+  // Garante que pacientes reclassificados continuem visíveis até a triagem ser salva
+  // e que todos os pacientes cadastrados aparecem até serem triados
+  useEffect(() => {
+    const todos = JSON.parse(localStorage.getItem('pacientes') || '[]');
+    const pacientesEmTriagem = todos.filter(p => p.emTriagem);
+    if (pacientesEmTriagem.length > 0) {
+      setPacientes(pacientesEmTriagem);
+    }
+  }, []);
+
   function handleSelecionar(idx) {
     setSelecionado(idx);
     setShowDetalhe(true);
@@ -66,11 +76,8 @@ export default function Triagem() {
     const pacienteTriado = pacientes[selecionado];
     const idxGeral = todos.findIndex(p => p.cpf === pacienteTriado.cpf);
     if (idxGeral !== -1) {
-      // Atualiza prioridade se reclassificada
-      let novoPaciente = { ...todos[idxGeral], triagem: dadosTriagem };
-      if (dadosTriagem.prioridade && dadosTriagem.prioridade !== todos[idxGeral].prioridade) {
-        novoPaciente.prioridade = dadosTriagem.prioridade;
-      }
+      // Sempre salva o campo triagem e atualiza prioridade
+      let novoPaciente = { ...todos[idxGeral], triagem: dadosTriagem, prioridade: dadosTriagem.prioridade };
       delete novoPaciente.emTriagem;
       todos[idxGeral] = novoPaciente;
       localStorage.setItem('pacientes', JSON.stringify(todos));
@@ -119,7 +126,7 @@ export default function Triagem() {
         {pacientesFiltrados.length === 0 && <p>Nenhum paciente aguardando triagem.</p>}
         {pacientesFiltrados.map((p, idx) => (
           <div
-            className={`card-atendimento prioridade-${p.prioridade?.toLowerCase()}`}
+            className={`card-triagem prioridade-${p.prioridade?.toLowerCase()}`}
             key={idx}
             tabIndex={0}
             onClick={() => handleSelecionar(idx)}
