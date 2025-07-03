@@ -1,0 +1,152 @@
+@import '../../index.css';
+
+main.cadastro-paciente {
+  max-width: 520px;
+  margin: 48px auto;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(42,92,141,0.10);
+  padding: 40px 36px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main.cadastro-paciente h1 {
+  text-align: center;
+  color: var(--primary-blue);
+  font-size: 2.2rem;
+  margin-bottom: 2.2rem;
+  font-weight: 700;
+}
+
+main.cadastro-paciente form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: stretch;
+}
+
+main.cadastro-paciente label {
+  font-weight: 600;
+  color: var(--primary-dark-blue);
+  margin-bottom: 0.3rem;
+  margin-left: 2px;
+}
+
+main.cadastro-paciente input[type="text"],
+main.cadastro-paciente input[type="date"] {
+  padding: 0.8em 1.1em;
+  border: 1.5px solid var(--border-light);
+  border-radius: 7px;
+  font-size: 1.05em;
+  background: #fff;
+  color: var(--text-dark);
+  margin-bottom: 0.2rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(42,92,141,0.04);
+}
+
+main.cadastro-paciente input[type="text"]:focus,
+main.cadastro-paciente input[type="date"]:focus {
+  border-color: var(--primary-blue);
+  outline: none;
+  box-shadow: 0 0 0 2px #2a5c8d22;
+}
+
+main.cadastro-paciente input[type="text"]:not(:placeholder-shown):not(:focus),
+main.cadastro-paciente input[type="date"]:not(:placeholder-shown):not(:focus) {
+  border-color: var(--secondary-green);
+  background: #f0fff4;
+}
+
+main.cadastro-paciente .prioridade {
+  display: flex;
+  gap: 1.1rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+main.cadastro-paciente .prioridade-btn {
+  flex: 1 1 0;
+  color: var(--white);
+  border: none;
+  border-radius: 7px;
+  padding: 0.7em 0.5em;
+  font-size: 1em;
+  transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 1px 4px rgba(42,92,141,0.07);
+  cursor: pointer;
+  font-weight: 600;
+  min-width: 90px;
+}
+
+main.cadastro-paciente .prioridade-btn.vermelho {
+  background: var(--accent-red);
+}
+main.cadastro-paciente .prioridade-btn.amarelo {
+  background: var(--accent-yellow);
+  color: #333;
+}
+main.cadastro-paciente .prioridade-btn.verde {
+  background: var(--secondary-green);
+}
+
+main.cadastro-paciente .prioridade-btn.active,
+main.cadastro-paciente .prioridade-btn:focus {
+  outline: none;
+  transform: scale(1.07);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  border: 2px solid #2222;
+}
+
+main.cadastro-paciente .prioridade-btn.vermelho.active {
+  background: #b71c1c; /* Considerar criar uma variável --accent-red-dark se desejar mais padronização */
+}
+main.cadastro-paciente .prioridade-btn.amarelo.active {
+  background: #f9a825; /* Considerar criar uma variável --accent-yellow-dark */
+  color: #222;
+}
+main.cadastro-paciente .prioridade-btn.verde.active {
+  background: #1b5e20; /* Considerar criar uma variável --secondary-green-dark */
+}
+
+main.cadastro-paciente .prioridade-btn:hover:not(.active) {
+  filter: brightness(1.1);
+  transform: scale(1.03);
+}
+
+main.cadastro-paciente .prioridade-btn span {
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+main.cadastro-paciente .prioridade-btn small {
+  font-size: 0.85em;
+  color: inherit;
+  opacity: 0.8;
+}
+
+main.cadastro-paciente button[type="submit"] {
+  margin-top: 2rem;
+  background: var(--secondary-green);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1.13em;
+  border: none;
+  border-radius: 7px;
+  padding: 1em 0;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 1px 4px rgba(76,175,80,0.09);
+  letter-spacing: 0.5px;
+}
+
+main.cadastro-paciente button[type="submit"]:hover {
+  background: var(--primary-dark-blue);
+  transform: scale(1.03);
+}
