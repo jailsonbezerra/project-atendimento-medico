@@ -6,7 +6,7 @@ header.header {
 
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
 }
 
 header.header h1 {
@@ -35,3 +35,4 @@ header.header hr {
     font-size: 2.2rem;
     margin-right: 0.5rem;
 }
+

@@ -4,6 +4,9 @@
 nav.menu-navegacao {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
 }
 
 nav.menu-navegacao a {
@@ -14,6 +17,7 @@ nav.menu-navegacao a {
     margin-right: 1rem;
     padding: 5px 15px;
     background-color: var(--primary-blue);
+    margin-bottom: 10px;
 
     border-radius: 5px;
 
