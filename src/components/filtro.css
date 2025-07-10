@@ -1,0 +1,14 @@
+.filtro ul {
+    display: flex;
+
+    list-style: none;
+}
+
+.filtro li {
+    margin: 0 15px;
+}
+
+.filtro button.ativo {
+  background-color: #007bff;
+  color: white;
+}

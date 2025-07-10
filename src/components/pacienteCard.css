@@ -1,0 +1,65 @@
+.urgente {
+    background-color: rgba(255, 0, 0);
+}
+
+.moderado {
+    background-color: rgba(255, 255, 0);
+}
+
+.normal {
+    background-color: rgba(0, 255, 0);
+}
+
+.prioridade-urgente {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+.prioridade-moderado {
+    background-color: rgba(255, 255, 0, 0.2);
+}
+
+.prioridade-normal {
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+.paciente-card {
+    width: 100%;
+    display: flex;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.paciente-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 99%;
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+.paciente-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cor-prioridade {
+    width: 1%;
+    height: 100%;
+
+    border-radius: 8px 0 0 8px;
+}
+
+.btn-excluir {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-excluir:hover {
+  background-color: #c0392b;
+}

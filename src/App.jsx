@@ -7,6 +7,10 @@ import CadastroPaciente from './pages/cadastro/CadastroPaciente'
 import Triagem from './pages/triagem/Triagem'
 import Atendimento from './pages/atendimento/Atendimento'
 import PainelSituacao from './pages/painel/PainelSituacao'
+import ListaPacientes from './components/ListaPacientes'
+import { getPacientes } from './utils/dados'
+
+const pacientes = getPacientes()
 
 function App() {
 
@@ -20,6 +24,7 @@ function App() {
         <Route path='/triagem' element={<Triagem />} />
         <Route path='/atendimento' element={<Atendimento />} />
         <Route path='/painel' element={<PainelSituacao />} />
+        <Route path='/lista' element={<ListaPacientes pacientes={pacientes} titulo={'Lista de Pacientes'} />} />
       </Routes>
 
       <Footer />

@@ -4,10 +4,4 @@
     color: var(--white);
     text-align: center;
     padding: 16px 0 10px 0;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    font-size: 1em;
-    letter-spacing: 0.5px;
-    z-index: 100;
 }

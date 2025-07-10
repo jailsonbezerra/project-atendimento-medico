@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
-import './Triagem.css';
-import TriagemDetalhe from './TriagemDetalhe';
+import {v4 as uuid} from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle, faHeartbeat, faCheckCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
+import PacienteCard from '../../components/PacienteCard';
+import TriagemDetalhe from './TriagemDetalhe';
+
+import './Triagem.css';
+
 
 const prioridadeLegendas = [
   { cor: 'vermelho', label: 'Urgente', icon: faExclamationCircle },
@@ -26,6 +30,16 @@ export default function Triagem() {
   useEffect(() => {
     // Exibe apenas pacientes que NÃO possuem triagem
     const data = JSON.parse(localStorage.getItem('pacientes') || '[]');
+
+    const ordem = ['urgente', 'moderado', 'normal']
+  
+    data.sort((a, b) => {
+      const ordemA = ordem.indexOf(a.prioridade.toLowerCase())
+      const ordemB = ordem.indexOf(b.prioridade.toLowerCase())
+      
+      return ordemA - ordemB;
+    });
+
     setPacientes(data.filter(p => !p.triagem));
   }, [showDetalhe]);
 
@@ -34,6 +48,7 @@ export default function Triagem() {
   useEffect(() => {
     const todos = JSON.parse(localStorage.getItem('pacientes') || '[]');
     const pacientesEmTriagem = todos.filter(p => p.emTriagem);
+
     if (pacientesEmTriagem.length > 0) {
       setPacientes(pacientesEmTriagem);
     }
@@ -90,7 +105,7 @@ export default function Triagem() {
 
   function excluirPaciente(paciente) {
     if (!window.confirm(`Deseja realmente excluir o paciente ${paciente.nome}?`)) return;
-    const todos = JSON.parse(localStorage.getItem('pacientes') || '[]');
+    const todos = JSON.parse(localStorage.getItem('pacientes') || '[]')
     const novos = todos.filter(p => p.cpf !== paciente.cpf);
     localStorage.setItem('pacientes', JSON.stringify(novos));
     setPacientes(novos.filter(p => !p.triagem));
@@ -125,20 +140,23 @@ export default function Triagem() {
       <div className="cards-triagem">
         {pacientesFiltrados.length === 0 && <p>Nenhum paciente aguardando triagem.</p>}
         {pacientesFiltrados.map((p, idx) => (
-          <div
-            className={`card-triagem prioridade-${p.prioridade?.toLowerCase()}`}
-            key={idx}
-            tabIndex={0}
-            onClick={() => handleSelecionar(idx)}
-            onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleSelecionar(idx)}
-          >
-            <h2>{p.nome}</h2>
-            <p><b>Idade:</b> {p.dataNascimento ? new Date().getFullYear() - new Date(p.dataNascimento).getFullYear() : '-'}</p>
-            <p><b>Prioridade:</b> {p.prioridade}</p>
-            <button className="excluir-btn" title="Excluir paciente" onClick={e => { e.stopPropagation(); excluirPaciente(p); }}>
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
-          </div>
+          <PacienteCard key={idx} paciente={p} onSelecionar={() => handleSelecionar(idx)} onExcluir={() => excluirPaciente(p)} />
+
+          
+          // <div
+          //   className={`card-triagem prioridade-${p.prioridade?.toLowerCase()}`}
+          //   key={idx}
+          //   tabIndex={0}
+          //   onClick={() => handleSelecionar(idx)}
+          //   onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleSelecionar(idx)}
+          // >
+          //   <h2>{p.nome}</h2>
+          //   <p><b>Idade:</b> {p.dataNascimento ? new Date().getFullYear() - new Date(p.dataNascimento).getFullYear() : '-'}</p>
+          //   <p><b>Prioridade:</b> {p.prioridade}</p>
+          //   <button className="excluir-btn" title="Excluir paciente" onClick={e => { e.stopPropagation(); excluirPaciente(p); }}>
+          //     <FontAwesomeIcon icon={faTrash} />
+          //   </button>
+          // </div>
         ))}
       </div>
       {showDetalhe && selecionado !== null && (

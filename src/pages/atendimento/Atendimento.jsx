@@ -26,6 +26,7 @@ export default function Atendimento() {
   useEffect(() => {
     // Exibe apenas pacientes que já passaram pela triagem e ainda não foram atendidos
     const data = JSON.parse(localStorage.getItem('pacientes') || '[]');
+
     setPacientes(data.filter(p => p.triagem && !p.atendimento));
   }, [showDetalhe]);
 
@@ -86,6 +87,15 @@ export default function Atendimento() {
   const pacientesFiltrados = filtroPrioridade
     ? pacientes.filter(p => p.prioridade === filtroPrioridade)
     : pacientes;
+
+  const ordem = ['urgente', 'moderado', 'normal']
+
+  pacientesFiltrados.sort((a, b) => {
+    const ordemA = ordem.indexOf(a.prioridade.toLowerCase())
+    const ordemB = ordem.indexOf(b.prioridade.toLowerCase())
+
+    return ordemA - ordemB
+  });
 
   return (
     <main className="atendimento">

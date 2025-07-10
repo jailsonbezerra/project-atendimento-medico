@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { getPacientes, salvarPacientes } from '../../utils/dados'
 
 import './CadastroPaciente.css'
 
@@ -30,10 +31,12 @@ export default function CadastroPaciente() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const pacientes = JSON.parse(localStorage.getItem('pacientes') || '[]');
+    const pacientes = getPacientes()
     // Garante que todos os pacientes cadastrados NÃO tenham campo triagem nem atendimento
     pacientes.push({ ...form, triagem: undefined, atendimento: undefined });
-    localStorage.setItem('pacientes', JSON.stringify(pacientes));
+
+    salvarPacientes(pacientes)
+    
     alert('Paciente cadastrado com sucesso!');
     setForm({
       nome: '',
