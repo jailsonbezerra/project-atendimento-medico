@@ -13,9 +13,9 @@ export default function Filtro({onFiltro, titulo, filtroSelecionado}) {
 
             <ul>
                 <li><button onClick={() => onFiltro(null)} className={!filtroSelecionado ? 'ativo' : ''}>Todos</button></li>
-                <li><button onClick={() => onFiltro('Urgente')} className={isAtivo('Urgente') ? 'ativo' : ''}><FontAwesomeIcon icon={faExclamationCircle} />Urgente</button></li>
-                <li><button onClick={() => onFiltro('Moderado')} className={isAtivo('Moderado') ? 'ativo' : ''}><FontAwesomeIcon icon={faHeartbeat} />Moderado</button></li>
-                <li><button onClick={() => onFiltro('Normal')} className={isAtivo('Normal') ? 'ativo' : ''}><FontAwesomeIcon icon={faCheckCircle} />Normal</button></li>
+                <li><button onClick={() => onFiltro('Urgente')} className={`urgente ${isAtivo('Urgente') ? 'ativo' : ''}`}><FontAwesomeIcon icon={faExclamationCircle} />Urgente</button></li>
+                <li><button onClick={() => onFiltro('Moderado')} className={`moderado ${isAtivo('Moderado') ? 'ativo' : ''}`}><FontAwesomeIcon icon={faHeartbeat} />Moderado</button></li>
+                <li><button onClick={() => onFiltro('Normal')} className={`normal ${isAtivo('Normal') ? 'ativo' : ''}`}><FontAwesomeIcon icon={faCheckCircle} />Normal</button></li>
             </ul>
         </nav>
     )

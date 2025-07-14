@@ -13,7 +13,6 @@ export default function Nav() {
         <Link to='/triagem'><FontAwesomeIcon icon={faNotesMedical} /> Triagem</Link>
         <Link to='/atendimento'><FontAwesomeIcon icon={faUserMd} /> Atendimento</Link>
         <Link to='/painel'><FontAwesomeIcon icon={faListAlt} /> Painel</Link>
-        <Link to='/lista'><FontAwesomeIcon icon={faListAlt} /> Pacientes</Link>
     </nav>
   )
 }

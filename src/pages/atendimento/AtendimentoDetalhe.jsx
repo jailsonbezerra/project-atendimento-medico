@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './AtendimentoDetalhe.css';
 
-export default function AtendimentoDetalhe({ paciente, onVoltar, onSalvar }) {
+export default function AtendimentoDetalhe({ paciente, onVoltar, onFinalizar }) {
   const [form, setForm] = useState({
     motivo: '',
     diagnostico: '',
@@ -16,7 +16,7 @@ export default function AtendimentoDetalhe({ paciente, onVoltar, onSalvar }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    onSalvar(form);
+    onFinalizar(form);
   }
 
   if (!paciente) return null;

@@ -1,0 +1,7 @@
+.lista-pacientes {
+    width: 100%;
+}
+
+section article.paciente-card {
+    margin-bottom: 10px;
+}

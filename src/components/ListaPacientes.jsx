@@ -1,36 +1,29 @@
 import { useState } from "react"
-
 import Filtro from "./Filtro"
+import PacienteCard from "./PacienteCard"
+import ordenaByPrioridade from "../utils/ordenaByPrioridade"
+
+import './ListaPacientes.css'
 
 
-export default function ListaPacientes({ pacientes, titulo }) {
+export default function ListaPacientes({ pacientes, titulo, onExcluir, onSelecionar }) {
     const [filtro, setFiltro] = useState(null)
 
-    const pacientesFiltrados = filtro ? pacientes.filter(paciente => paciente.prioridade === filtro) : pacientes
+    let pacientesFiltrados = filtro ? pacientes.filter(paciente => paciente.prioridade === filtro) : pacientes
 
-    const ordemPrioridade = ['urgente', 'moderado', 'normal']
-
-    pacientesFiltrados.sort((a, b) => {
-        const indexA = ordemPrioridade.indexOf(a.prioridade.toLocaleLowerCase())
-        const indexB = ordemPrioridade.indexOf(b.prioridade.toLocaleLowerCase())
-
-        return indexA - indexB
-    })
+    pacientesFiltrados = ordenaByPrioridade(pacientesFiltrados)
 
   return (
-    <>
+    <section className="lista-pacientes">
         { titulo && <Filtro onFiltro={setFiltro} titulo={titulo} filtroSelecionado={filtro} />}
 
+        { pacientesFiltrados.length === 0 && <p>Nenhum paciente.</p> }
+
         {
-            pacientesFiltrados.map(paciente => (
-                <article key={paciente.nome}>
-                    <h2>{paciente.nome}</h2>
-                    <p>Idade: {paciente.idade}</p>
-                    <p>Prioridade: {paciente.prioridade}</p>
-                    <button>Excluir</button>
-                </article>
-            ))
-        }
-    </>
+            pacientesFiltrados.map((paciente) => (
+                <PacienteCard key={paciente.id} paciente={paciente} onExcluir={() => onExcluir(paciente.id)} onSelecionar={() => onSelecionar(paciente.id)} />
+            )) 
+        } 
+    </section >
   )
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import {v4 as uuid} from 'uuid'
 import { getPacientes, salvarPacientes } from '../../utils/dados'
 
 import './CadastroPaciente.css'
@@ -6,6 +7,7 @@ import './CadastroPaciente.css'
 
 export default function CadastroPaciente() {
   const [form, setForm] = useState({
+    id: uuid(),
     nome: '',
     cpf: '',
     dataNascimento: '',
@@ -39,6 +41,7 @@ export default function CadastroPaciente() {
     
     alert('Paciente cadastrado com sucesso!');
     setForm({
+      id: uuid(),
       nome: '',
       cpf: '',
       dataNascimento: '',

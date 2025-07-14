@@ -1,171 +1,105 @@
-import { useEffect, useState } from 'react';
-import {v4 as uuid} from 'uuid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationCircle, faHeartbeat, faCheckCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
-import PacienteCard from '../../components/PacienteCard';
-import TriagemDetalhe from './TriagemDetalhe';
+import { useEffect, useState } from 'react'
+import TriagemDetalhe from './TriagemDetalhe'
+import ListaPacientes from '../../components/ListaPacientes'
+import { getPacientes, salvarPaciente, deletarPaciente } from '../../utils/dados'
 
-import './Triagem.css';
+import './Triagem.css'
 
-
-const prioridadeLegendas = [
-  { cor: 'vermelho', label: 'Urgente', icon: faExclamationCircle },
-  { cor: 'amarelo', label: 'Moderado', icon: faHeartbeat },
-  { cor: 'verde', label: 'Normal', icon: faCheckCircle },
-];
-
-function registrarChamadaTriagem(paciente, local = 'Sala de Triagem') {
-  const ultimos = JSON.parse(localStorage.getItem('ultimos_chamados') || '[]');
-  const novo = { nome: paciente.nome, prioridade: paciente.prioridade, cpf: paciente.cpf, local };
-  const lista = [novo, ...ultimos.filter(p => p.cpf !== paciente.cpf)].slice(0, 3);
-  localStorage.setItem('ultimos_chamados', JSON.stringify(lista));
+function registrarChamada(paciente, local = 'Sala de Triagem') {
+  const ultimos = JSON.parse(localStorage.getItem('ultimos_chamados') || '[]')
+  const novo = { nome: paciente.nome, prioridade: paciente.prioridade, cpf: paciente.cpf, local }
+  const lista = [novo, ...ultimos.filter(p => p.cpf !== paciente.cpf)].slice(0, 3)
+  localStorage.setItem('ultimos_chamados', JSON.stringify(lista))
 }
 
 export default function Triagem() {
-  const [pacientes, setPacientes] = useState([]);
-  const [selecionado, setSelecionado] = useState(null);
-  const [showDetalhe, setShowDetalhe] = useState(false);
-  const [filtroPrioridade, setFiltroPrioridade] = useState('');
+  const [pacientes, setPacientes] = useState([])
+  const [pacienteSelecionadoId, setPacienteSelecionadoId] = useState(null)
+  const [showDetalhe, setShowDetalhe] = useState(false)
 
   useEffect(() => {
-    // Exibe apenas pacientes que NÃO possuem triagem
-    const data = JSON.parse(localStorage.getItem('pacientes') || '[]');
+    atualizarLista()
+  }, [])
 
-    const ordem = ['urgente', 'moderado', 'normal']
-  
-    data.sort((a, b) => {
-      const ordemA = ordem.indexOf(a.prioridade.toLowerCase())
-      const ordemB = ordem.indexOf(b.prioridade.toLowerCase())
-      
-      return ordemA - ordemB;
-    });
+  function atualizarLista() {
+    const pacientesFiltrados = getPacientes().filter(p => !p.triagem)
+    setPacientes(pacientesFiltrados)
+  }
 
-    setPacientes(data.filter(p => !p.triagem));
-  }, [showDetalhe]);
+  function handleSelecionar(id) {
+    const paciente = pacientes.find(p => p.id === id)
+    if (!paciente) return
 
-  // Garante que pacientes reclassificados continuem visíveis até a triagem ser salva
-  // e que todos os pacientes cadastrados aparecem até serem triados
-  useEffect(() => {
-    const todos = JSON.parse(localStorage.getItem('pacientes') || '[]');
-    const pacientesEmTriagem = todos.filter(p => p.emTriagem);
+    const atualizado = { ...paciente, emTriagem: true }
+    salvarPaciente(atualizado)
 
-    if (pacientesEmTriagem.length > 0) {
-      setPacientes(pacientesEmTriagem);
-    }
-  }, []);
-
-  function handleSelecionar(idx) {
-    setSelecionado(idx);
-    setShowDetalhe(true);
-    // Registra chamada ao abrir triagem
-    registrarChamadaTriagem(pacientes[idx]);
-    // Marca paciente como em triagem
-    const todos = JSON.parse(localStorage.getItem('pacientes') || '[]');
-    const paciente = pacientes[idx];
-    const idxGeral = todos.findIndex(p => p.cpf === paciente.cpf);
-    if (idxGeral !== -1) {
-      todos[idxGeral] = { ...todos[idxGeral], emTriagem: true };
-      localStorage.setItem('pacientes', JSON.stringify(todos));
-    }
+    setPacienteSelecionadoId(id)
+    setShowDetalhe(true)
+    registrarChamada(atualizado)
+    atualizarLista()
   }
 
   function handleVoltar() {
-    setShowDetalhe(false);
-    // Remove status emTriagem ao fechar
-    if (selecionado !== null) {
-      const todos = JSON.parse(localStorage.getItem('pacientes') || '[]');
-      const paciente = pacientes[selecionado];
-      const idxGeral = todos.findIndex(p => p.cpf === paciente.cpf);
-      if (idxGeral !== -1) {
-        const pacienteAtual = { ...todos[idxGeral] };
-        delete pacienteAtual.emTriagem;
-        todos[idxGeral] = pacienteAtual;
-        localStorage.setItem('pacientes', JSON.stringify(todos));
+    setShowDetalhe(false)
+
+    if (pacienteSelecionadoId) {
+      const paciente = getPacientes().find(p => p.id === pacienteSelecionadoId)
+      if (paciente) {
+        const atualizado = { ...paciente }
+        delete atualizado.emTriagem
+        salvarPaciente(atualizado)
       }
     }
+
+    setPacienteSelecionadoId(null)
+    atualizarLista()
   }
 
   function handleSalvarTriagem(dadosTriagem) {
-    // Salva os dados de triagem junto ao paciente selecionado
-    const todos = JSON.parse(localStorage.getItem('pacientes') || '[]');
-    const pacienteTriado = pacientes[selecionado];
-    const idxGeral = todos.findIndex(p => p.cpf === pacienteTriado.cpf);
-    if (idxGeral !== -1) {
-      // Sempre salva o campo triagem e atualiza prioridade
-      let novoPaciente = { ...todos[idxGeral], triagem: dadosTriagem, prioridade: dadosTriagem.prioridade };
-      delete novoPaciente.emTriagem;
-      todos[idxGeral] = novoPaciente;
-      localStorage.setItem('pacientes', JSON.stringify(todos));
-      window.dispatchEvent(new Event('storage'));
+    if (!pacienteSelecionadoId) return
+
+    const paciente = getPacientes().find(p => p.id === pacienteSelecionadoId)
+    if (!paciente) return
+
+    const atualizado = {
+      ...paciente,
+      triagem: dadosTriagem,
+      prioridade: dadosTriagem.prioridade
     }
-    // Atualiza a lista imediatamente após salvar
-    setPacientes(todos.filter(p => !p.triagem));
-    setShowDetalhe(false);
+
+    delete atualizado.emTriagem
+    salvarPaciente(atualizado)
+
+    setShowDetalhe(false)
+    setPacienteSelecionadoId(null)
+    atualizarLista()
   }
 
-  function excluirPaciente(paciente) {
-    if (!window.confirm(`Deseja realmente excluir o paciente ${paciente.nome}?`)) return;
-    const todos = JSON.parse(localStorage.getItem('pacientes') || '[]')
-    const novos = todos.filter(p => p.cpf !== paciente.cpf);
-    localStorage.setItem('pacientes', JSON.stringify(novos));
-    setPacientes(novos.filter(p => !p.triagem));
+  function excluirPaciente(id) {
+    deletarPaciente(id)
+    atualizarLista()
   }
 
-  const pacientesFiltrados = filtroPrioridade
-    ? pacientes.filter(p => p.prioridade === filtroPrioridade)
-    : pacientes;
+  const pacienteSelecionado = pacienteSelecionadoId
+    ? getPacientes().find(p => p.id === pacienteSelecionadoId)
+    : null
 
   return (
     <main className="triagem">
-      <h1>Triagem de Pacientes</h1>
-      <div className="painel-legenda">
-        <span
-          className={`legenda-prioridade prioridade-todos${!filtroPrioridade ? ' selecionado' : ''}`}
-          onClick={() => setFiltroPrioridade('')}
-          style={{ cursor: 'pointer', fontWeight: !filtroPrioridade ? 'bold' : 'normal', textDecoration: !filtroPrioridade ? 'underline' : 'none' }}
-          title="Mostrar todos"
-        >
-          Todos
-        </span>
-        {prioridadeLegendas.map((p, idx) => (
-          <span key={idx} className={`legenda-prioridade prioridade-${p.cor}${filtroPrioridade === p.label ? ' selecionado' : ''}`}
-            onClick={() => setFiltroPrioridade(p.label)}
-            style={{ cursor: 'pointer', fontWeight: filtroPrioridade === p.label ? 'bold' : 'normal', textDecoration: filtroPrioridade === p.label ? 'underline' : 'none' }}
-            title={`Filtrar por ${p.label}`}
-          >
-            <FontAwesomeIcon icon={p.icon} /> {p.label}
-          </span>
-        ))}
-      </div>
-      <div className="cards-triagem">
-        {pacientesFiltrados.length === 0 && <p>Nenhum paciente aguardando triagem.</p>}
-        {pacientesFiltrados.map((p, idx) => (
-          <PacienteCard key={idx} paciente={p} onSelecionar={() => handleSelecionar(idx)} onExcluir={() => excluirPaciente(p)} />
+      <ListaPacientes
+        pacientes={pacientes}
+        onSelecionar={handleSelecionar}
+        onExcluir={excluirPaciente}
+        titulo="Triagem de Pacientes"
+      />
 
-          
-          // <div
-          //   className={`card-triagem prioridade-${p.prioridade?.toLowerCase()}`}
-          //   key={idx}
-          //   tabIndex={0}
-          //   onClick={() => handleSelecionar(idx)}
-          //   onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleSelecionar(idx)}
-          // >
-          //   <h2>{p.nome}</h2>
-          //   <p><b>Idade:</b> {p.dataNascimento ? new Date().getFullYear() - new Date(p.dataNascimento).getFullYear() : '-'}</p>
-          //   <p><b>Prioridade:</b> {p.prioridade}</p>
-          //   <button className="excluir-btn" title="Excluir paciente" onClick={e => { e.stopPropagation(); excluirPaciente(p); }}>
-          //     <FontAwesomeIcon icon={faTrash} />
-          //   </button>
-          // </div>
-        ))}
-      </div>
-      {showDetalhe && selecionado !== null && (
+      {showDetalhe && pacienteSelecionado && (
         <TriagemDetalhe
-          paciente={pacientes[selecionado]}
+          paciente={pacienteSelecionado}
           onVoltar={handleVoltar}
           onSalvar={handleSalvarTriagem}
         />
       )}
     </main>
-  );
+  )
 }

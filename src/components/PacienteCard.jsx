@@ -7,7 +7,7 @@ export default function PacienteCard({ paciente, onSelecionar, onExcluir }) {
     const prioridade = paciente.prioridade.toLowerCase();
 
     return (
-        <article className={`paciente-card prioridade-${prioridade}`} onClick={() => onSelecionar(paciente.idx)}>
+        <article className={`paciente-card prioridade-${prioridade}`} onClick={() => onSelecionar(paciente.id)}>
             <div className={`cor-prioridade ${prioridade}`}></div>
 
             <div className="paciente-card-header">
@@ -16,7 +16,7 @@ export default function PacienteCard({ paciente, onSelecionar, onExcluir }) {
                 <p>Prioridade: {paciente.prioridade}</p>
 
                 {
-                    onExcluir && <button className='btn-excluir' onClick={(e) => {e.stopPropagation(); onExcluir(paciente.idx);}}>Excluir</button>
+                    onExcluir && <button className='btn-excluir' onClick={(e) => {e.stopPropagation(); onExcluir(paciente.id);}}>Excluir</button>
                 }
             </div>
         </article>

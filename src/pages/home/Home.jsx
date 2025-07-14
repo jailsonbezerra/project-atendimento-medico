@@ -1,10 +1,12 @@
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faHospital, faUserMd, faUserInjured } from '@fortawesome/free-solid-svg-icons';
 import { faGithub as faGithubBrand, faLinkedin as faLinkedinBrand } from '@fortawesome/free-brands-svg-icons';
-import { useEffect, useState } from "react";
+import { participantes } from './participantes';
+import { inicializarPacientesAleatorios } from "../../utils/dados";
 
 import './home.css';
-import { participantes } from './participantes';
+
 
 export function Home() {
   const noticias = [
@@ -14,6 +16,10 @@ export function Home() {
     { data: "25/06/2025", texto: "Projeto inicial publicado no GitHub." },
   ];
   const [noticiaAtual, setNoticiaAtual] = useState(0);
+
+  useEffect(() => {
+    inicializarPacientesAleatorios()
+  })
 
   useEffect(() => {
     const timer = setInterval(() => {

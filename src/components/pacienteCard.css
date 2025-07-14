@@ -45,11 +45,12 @@
 }
 
 .cor-prioridade {
-    width: 1%;
-    height: 100%;
-
+    width: 8px;
+    min-width: 6px;
+    height: auto;
     border-radius: 8px 0 0 8px;
 }
+
 
 .btn-excluir {
   background-color: #e74c3c;
