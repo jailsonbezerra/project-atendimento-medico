@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {v4 as uuid} from 'uuid'
+import Prioridade from '../../components/Prioridade';
 import { getPacientes, salvarPacientes } from '../../utils/dados'
 
 import './CadastroPaciente.css'
@@ -16,30 +17,26 @@ export default function CadastroPaciente() {
     prioridade: 'Normal',
   });
 
-  const prioridades = [
-    { label: 'Urgente', cor: 'vermelho', descricao: 'Atendimento imediato' },
-    { label: 'Moderado', cor: 'amarelo', descricao: 'Atendimento em breve' },
-    { label: 'Normal', cor: 'verde', descricao: 'Atendimento padrão' },
-  ];
+
 
   function handleChange(e) {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
   }
 
-  function handlePrioridade(prioridade) {
-    setForm(prev => ({ ...prev, prioridade }));
+  function handlePrioridade(novaPrioridade) {
+    setForm(prev => ({ ...prev, prioridade: novaPrioridade }))
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     const pacientes = getPacientes()
-    // Garante que todos os pacientes cadastrados NÃO tenham campo triagem nem atendimento
     pacientes.push({ ...form, triagem: undefined, atendimento: undefined });
 
     salvarPacientes(pacientes)
     
     alert('Paciente cadastrado com sucesso!');
+
     setForm({
       id: uuid(),
       nome: '',
@@ -71,22 +68,12 @@ export default function CadastroPaciente() {
         <input type="text" name="telefone" id="telefone" value={form.telefone} onChange={handleChange} required />
 
         <label>Prioridade de Atendimento:</label>
+        
         <div className="prioridade">
-          {prioridades.map((p) => (
-            <button
-              type="button"
-              key={p.label}
-              className={
-                'prioridade-btn ' +
-                p.cor +
-                (form.prioridade === p.label ? ' active' : '')
-              }
-              onClick={() => handlePrioridade(p.label)}
-            >
-              <span>{p.label}</span>
-              <small>{p.descricao}</small>
-            </button>
-          ))}
+          <Prioridade
+              prioridade={form.prioridade}
+              onChange={handlePrioridade}
+            />
         </div>
         <button type="submit">Salvar</button>
       </form>

@@ -1,14 +1,7 @@
+@import  '../../index.css';
+
+
 main.triagem {
-  max-width: 900px;
-  margin: 48px auto;
-  background: var(--white);
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(42,92,141,0.10);
-  padding: 40px 36px 32px 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 80vh;
   overflow-y: auto;
 }
 
@@ -18,6 +11,16 @@ main.triagem h1 {
   font-size: 2.2rem;
   margin-bottom: 2.2rem;
   font-weight: 700;
+}
+
+main.triagem .lista-pacientes {
+  width: 90%;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  justify-content: center;
+  align-items: center;
 }
 
 

@@ -1,14 +1,4 @@
-.painel-situacao {
-  max-width: 1200px;
-  margin: 40px auto;
-  background: var(--white);
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(42,92,141,0.10);
-  padding: 36px 24px 32px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+@import '../../index.css';
 
 .painel-situacao h1 {
   text-align: center;
@@ -19,7 +9,7 @@
 }
 
 .painel-colunas {
-  width: 100%;
+  width: 95%;
   display: flex;
   gap: 2.5rem;
   justify-content: center;

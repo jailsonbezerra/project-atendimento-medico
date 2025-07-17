@@ -5,3 +5,9 @@ export function calcularIdade(dataNascimento) {
 
   return Math.floor(idade)
 }
+
+export function calcularIMC(peso, altura) {
+  if (!peso || !altura) return
+
+  return (peso / (altura * altura)).toFixed(1)
+}

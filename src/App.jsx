@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Form, Route, Routes } from 'react-router-dom'
 import { Home } from './pages/home/Home'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -8,6 +8,8 @@ import Atendimento from './pages/atendimento/Atendimento'
 import PainelSituacao from './pages/painel/PainelSituacao'
 
 import './App.css'
+import SintuacaoPaciente from './components/SintuacaoPaciente'
+import FormTriagem from './pages/triagem/FormTriagem'
 
 
 function App() {
@@ -20,7 +22,9 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/cadastro' element={<CadastroPaciente />} />
         <Route path='/triagem' element={<Triagem />} />
+        <Route path='/triagem/:id' element={<FormTriagem />} />
         <Route path='/atendimento' element={<Atendimento />} />
+        <Route path='/paciente/:id' element={<SintuacaoPaciente />} />
         <Route path='/painel' element={<PainelSituacao />} />
       </Routes>
 

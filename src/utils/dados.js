@@ -62,5 +62,12 @@ function inicializarPacientesAleatorios() {
     console.log("Pacientes aleatórios inicializados e salvos no localStorage.")
 }
 
+function registrarChamada(paciente, local) {
+  const ultimos = JSON.parse(localStorage.getItem('ultimos_chamados') || '[]')
+  const novo = { nome: paciente.nome, prioridade: paciente.prioridade, cpf: paciente.cpf, local }
+  const lista = [novo, ...ultimos.filter(p => p.cpf !== paciente.cpf)].slice(0, 3)
+  localStorage.setItem('ultimos_chamados', JSON.stringify(lista))
+}
 
-export { getPacientes, getPaciente, salvarPaciente, salvarPacientes, deletarPaciente, inicializarPacientesAleatorios }
+
+export { getPacientes, getPaciente, salvarPaciente, salvarPacientes, deletarPaciente, inicializarPacientesAleatorios, registrarChamada }

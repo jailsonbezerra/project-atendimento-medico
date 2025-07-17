@@ -1,29 +1,47 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import AtendimentoDetalhe from './AtendimentoDetalhe'
 import ListaPacientes from '../../components/ListaPacientes'
-import { getPacientes, salvarPaciente, deletarPaciente } from '../../utils/dados'
+import { getPacientes, salvarPaciente, deletarPaciente, registrarChamada } from '../../utils/dados'
 
 import './Atendimento.css'
 
-function registrarChamada(paciente, local = 'Consultório') {
-  const ultimos = JSON.parse(localStorage.getItem('ultimos_chamados') || '[]')
-  const novo = { nome: paciente.nome, prioridade: paciente.prioridade, cpf: paciente.cpf, local }
-  const lista = [novo, ...ultimos.filter(p => p.cpf !== paciente.cpf)].slice(0, 3)
-  localStorage.setItem('ultimos_chamados', JSON.stringify(lista))
-}
 
 export default function Atendimento() {
   const [pacientes, setPacientes] = useState([])
   const [pacienteSelecionadoId, setPacienteSelecionadoId] = useState(null)
   const [showDetalhe, setShowDetalhe] = useState(false)
 
+
   useEffect(() => {
     atualizarLista()
-  }, [])
+
+    function handleBeforeUnload() {
+      const pacienteAtual = getPacientes().find(p => p.id === pacienteSelecionadoId)
+
+      if (pacienteAtual && pacienteAtual.emAtendimento) {
+        delete pacienteAtual.emAtendimento
+        salvarPaciente(pacienteAtual)
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+
+      const pacienteAtual = getPacientes().find(p => p.id === pacienteSelecionadoId)
+
+      if (pacienteAtual && pacienteAtual.emAtendimento) {
+        delete pacienteAtual.emAtendimento
+        salvarPaciente(pacienteAtual)
+      }
+    }
+  }, [pacienteSelecionadoId])
 
   function atualizarLista() {
-    const filtrados = getPacientes().filter(p => p.triagem && !p.atendido)
-    setPacientes(filtrados)
+    const pacientesFiltrados = getPacientes().filter(p => p.triagem && !p.atendido)
+
+    setPacientes(pacientesFiltrados)
   }
 
   function handleSelecionar(id) {
@@ -35,18 +53,20 @@ export default function Atendimento() {
 
     setPacienteSelecionadoId(id)
     setShowDetalhe(true)
-    registrarChamada(atualizado)
+    registrarChamada(atualizado, 'Consultório')
     atualizarLista()
   }
 
   function handleVoltar() {
     setShowDetalhe(false)
 
-    if (pacienteSelecionadoId) {
+    if(pacienteSelecionadoId) {
       const paciente = getPacientes().find(p => p.id === pacienteSelecionadoId)
-      if (paciente) {
+      
+      if(paciente) {
         const atualizado = { ...paciente }
         delete atualizado.emAtendimento
+
         salvarPaciente(atualizado)
       }
     }
@@ -56,10 +76,11 @@ export default function Atendimento() {
   }
 
   function handleFinalizarAtendimento(dadosAtendimento) {
-    if (!pacienteSelecionadoId) return
+    if(!pacienteSelecionadoId) return
 
     const paciente = getPacientes().find(p => p.id === pacienteSelecionadoId)
-    if (!paciente) return
+
+    if(!paciente) return
 
     const atualizado = {
       ...paciente,
@@ -68,8 +89,8 @@ export default function Atendimento() {
     }
 
     delete atualizado.emAtendimento
-    salvarPaciente(atualizado)
 
+    salvarPaciente(atualizado)
     setShowDetalhe(false)
     setPacienteSelecionadoId(null)
     atualizarLista()

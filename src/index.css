@@ -37,27 +37,27 @@ body {
   padding: 0;
 
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   place-items: center;
 
-  min-width: 320px;
-  min-height: 100vh;
   width: 100%;
 }
 
 main {
   width: 95%;
-  min-height: 400px;
+  min-height: 90vh;
 
-  margin-top: 30px; 
-  border-radius: 8px;
+  margin: 30px auto; 
+  border-radius: 16px;
   border: 1px solid var(--border-light);
+
+  background-color: var(--white);
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
   overflow: hidden;
 }
 

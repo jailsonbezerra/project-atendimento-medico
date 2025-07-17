@@ -21,7 +21,7 @@ export default function ListaPacientes({ pacientes, titulo, onExcluir, onSelecio
 
         {
             pacientesFiltrados.map((paciente) => (
-                <PacienteCard key={paciente.id} paciente={paciente} onExcluir={() => onExcluir(paciente.id)} onSelecionar={() => onSelecionar(paciente.id)} />
+                <PacienteCard key={paciente.id} paciente={paciente} {...(onExcluir && { onExcluir: () => onExcluir(paciente.id) })} onSelecionar={() => onSelecionar(paciente.id)} />
             )) 
         } 
     </section >

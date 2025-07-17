@@ -35,22 +35,27 @@ export function Home() {
   return (
     <>
       <main className="home">
-        <div className="home-icons">
+        <span className="home-icons">
           <FontAwesomeIcon icon={faHospital} className="icon-hospital" title="Hospital" />
           <FontAwesomeIcon icon={faUserMd} className="icon-doctor" title="Médico" />
           <FontAwesomeIcon icon={faUserInjured} className="icon-patient" title="Paciente" />
           <FontAwesomeIcon icon={faHeart} className="gentle-pulse icon-heart" title="Cuidado" />
-        </div>
+        </span>
+
         <h1>Projeto de Gestão de Fluxo Hospitalar</h1>
-        <div className="home-resumo">
+
+        <section className="home-resumo">
           <p><b>Resumo:</b> Sistema web para cadastro, triagem, atendimento médico e painel de situação dos pacientes, com atualização em tempo real e interface responsiva.</p>
-        </div>
-        <div className="home-noticias">
+        </section>
+
+        <section className="home-noticias">
           <b>Notícias:</b>
-          <div className="noticia-destaque" onClick={() => window.open('https://github.com/', '_blank')} style={{cursor:'pointer'}}>
+
+          <article className="noticia-destaque" onClick={() => window.open('https://github.com/', '_blank')} style={{cursor:'pointer'}}>
             <span className="noticia-data">{noticias[noticiaAtual].data}:</span> {noticias[noticiaAtual].texto}
-          </div>
-          <div className="noticia-indicadores">
+          </article>
+
+          <span className="noticia-indicadores">
             {noticias.map((n, idx) => (
               <button
                 key={idx}
@@ -61,10 +66,11 @@ export function Home() {
                 ●
               </button>
             ))}
-          </div>
-        </div>
-        <div className="home-participantes">
+          </span>
+        </section>
+        <section className="home-participantes">
           <b>Participantes:</b>
+
           <ul>
             {participantes.map((p, idx) => (
               <li key={idx}>
@@ -74,8 +80,10 @@ export function Home() {
               </li>
             ))}
           </ul>
-        </div>
+        </section>
+
         <p className="home-versao">Versão 2.0 REFATORADO</p>
+        
         <p>Selecione um módulo acima para iniciar o atendimento ao paciente.</p>
       </main>
     </>

@@ -1,5 +1,8 @@
 import { useState } from 'react';
+
 import './AtendimentoDetalhe.css';
+import { calcularIdade, calcularIMC } from '../../utils/date';
+
 
 export default function AtendimentoDetalhe({ paciente, onVoltar, onFinalizar }) {
   const [form, setForm] = useState({
@@ -21,32 +24,6 @@ export default function AtendimentoDetalhe({ paciente, onVoltar, onFinalizar }) 
 
   if (!paciente) return null;
 
-  // Função para calcular idade
-  function calcularIdade(dataNascimento) {
-    if (!dataNascimento) return '-';
-    const hoje = new Date();
-    const nasc = new Date(dataNascimento);
-    let idade = hoje.getFullYear() - nasc.getFullYear();
-    const m = hoje.getMonth() - nasc.getMonth();
-    if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) {
-      idade--;
-    }
-    return idade;
-  }
-
-  // Função para calcular IMC
-  function calcularIMC(peso, altura) {
-    if (!peso || !altura) return '-';
-    const alturaM = Number(altura) / 100;
-    if (!alturaM) return '-';
-    const imc = Number(peso) / (alturaM * alturaM);
-    if (!imc || isNaN(imc) || !isFinite(imc)) return '-';
-    return imc.toFixed(1);
-  }
-
-  // Dados de triagem
-  const triagem = paciente.triagem || {};
-
   return (
     <div className="atendimento-detalhe-modal">
       <div className="atendimento-detalhe-content">
@@ -66,10 +43,9 @@ export default function AtendimentoDetalhe({ paciente, onVoltar, onFinalizar }) 
         }}>
           <div><b>Nome:</b> {paciente.nome}</div>
           <div><b>Idade:</b> {calcularIdade(paciente.dataNascimento)}</div>
-          <div><b>Sexo:</b> {paciente.sexo || '-'}</div>
-          <div><b>Temperatura:</b> {triagem.temperatura || '-'}</div>
-          <div><b>Pressão:</b> {triagem.pressao || '-'}</div>
-          <div><b>IMC:</b> {calcularIMC(triagem.peso, triagem.altura)}</div>
+          <div><b>Temperatura:</b> {paciente.triagem.temperatura || '-'}</div>
+          <div><b>Pressão:</b> {paciente.triagem.pressao || '-'}</div>
+          <div><b>IMC:</b> {calcularIMC(paciente.triagem.peso, paciente.triagem.altura)}</div>
         </div>
         <form onSubmit={handleSubmit} autoComplete="off">
           <label>Motivo da Consulta:</label>

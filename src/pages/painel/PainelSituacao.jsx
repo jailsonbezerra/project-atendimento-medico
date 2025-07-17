@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import './PainelSituacao.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faStethoscope, faUserCheck, faUserClock, faExclamationCircle, faCheckCircle, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
+import ordenaByPrioridade from '../../utils/ordenaByPrioridade';
+import { getPacientes } from '../../utils/dados';
 
 const statusLabels = {
   aguardando_triagem: { label: 'Esperando Triagem', icon: faClock },
@@ -34,10 +36,10 @@ export default function PainelSituacao() {
   const [ultimosChamados, setUltimosChamados] = useState([]);
 
   useEffect(() => {
-    let ultimoPacientes = localStorage.getItem('pacientes');
+    let ultimoPacientes = getPacientes();
     let ultimoChamados = localStorage.getItem('ultimos_chamados');
     function atualizarPainel() {
-      const data = JSON.parse(localStorage.getItem('pacientes') || '[]');
+      const data = ordenaByPrioridade(getPacientes());
       setPacientes(data);
       setUltimosChamados(getUltimosChamados());
     }
@@ -48,7 +50,8 @@ export default function PainelSituacao() {
     });
     // Atualização automática por polling
     const interval = setInterval(() => {
-      const atualPacientes = localStorage.getItem('pacientes');
+      const atualPacientes = getPacientes()
+      ordenaByPrioridade(atualPacientes)
       const atualChamados = localStorage.getItem('ultimos_chamados');
       if (atualPacientes !== ultimoPacientes || atualChamados !== ultimoChamados) {
         ultimoPacientes = atualPacientes;
@@ -93,7 +96,7 @@ export default function PainelSituacao() {
             <h2><FontAwesomeIcon icon={icon} className="painel-status-icon" /> {label}</h2>
             {statusMap[status].length === 0 && <p className="vazio">Nenhum paciente</p>}
             {statusMap[status].map((p, idx) => (
-              <div className={`painel-card prioridade-${p.prioridade?.toLowerCase()}${p.prioridade === 'Urgente' ? ' destaque-urgente' : ''}`} key={p.cpf || p.nome+idx}>
+              <div className={`painel-card prioridade-${p.prioridade?.toLowerCase()}${p.prioridade === 'Urgente' ? ' destaque-urgente' : ''}`} key={p.id || p.nome+idx}>
                 <span className="painel-nome">{p.nome}</span>
                 <span className="painel-prioridade">{p.prioridade}</span>
               </div>
