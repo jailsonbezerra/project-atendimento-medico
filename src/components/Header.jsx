@@ -1,19 +1,21 @@
 import Nav from "./Nav";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeartbeat } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
-import './header.css';
+import './Header.css';
 
 
 export default function Header() {
-  return (
-    <header className="header">
-        <h1>
-          <FontAwesomeIcon icon={faHeartbeat} className="header-icon" />
-          Avanti + Saúde
-        </h1>
-        <hr />
-        <Nav />
-    </header>
-  );
+    return (
+        <header className="header">
+            <h1>
+                <FontAwesomeIcon icon={faHeart} className="gentle-pulse header-icon" />
+                Avanti + Saúde
+            </h1>
+
+            <hr />
+
+            <Nav />
+        </header>
+    )
 }

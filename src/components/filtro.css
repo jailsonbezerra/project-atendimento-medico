@@ -15,29 +15,29 @@
 }
 
 .filtro button {
-  background-color: aliceblue;
-  color: blue;
-  display: flex;
-  align-items: center;
+    background-color: aliceblue;
+    color: blue;
+    display: flex;
+    align-items: center;
 }
 
 .filtro button svg {
-  margin-right: 5px;
+    margin-right: 5px;
 }
 
 .filtro .urgente {
-  color: red;
+    color: red;
 }
 
 .filtro .moderado {
-  color: orange;
+    color: orange;
 }
 
 .filtro .normal {
-  color: green;
+    color: green;
 }
 
 .filtro button.ativo {
-  background-color: #bbb;
-  font-weight: 700;
+    background-color: #bbb;
+    font-weight: 700;
 }

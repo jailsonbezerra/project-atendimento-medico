@@ -29,17 +29,20 @@ function salvarPaciente(paciente) {
     }
 
     localStorage.setItem('pacientes', JSON.stringify(pacienteAtualizados))
+    
     window.dispatchEvent(new Event('storage'))
 }
 
 function salvarPacientes(pacientes) {
     localStorage.setItem('pacientes', JSON.stringify(pacientes))
+
     window.dispatchEvent(new Event('storage'))
 }
 
 function deletarPaciente(id) {
     const pacientes = getPacientes()
     const pacientesFiltrados = pacientes.filter(p => p.id !== id)
+
     salvarPacientes(pacientesFiltrados)
 
     console.log(`Paciente ${id} removido com sucesso!`)
@@ -54,19 +57,21 @@ function inicializarPacientesAleatorios() {
     }
 
     const pacientesComId = pacientesData.map(paciente => ({
-        id: uuid(), 
+        id: uuid(),
         ...paciente
     }))
 
     salvarPacientes(pacientesComId)
+
     console.log("Pacientes aleatórios inicializados e salvos no localStorage.")
 }
 
 function registrarChamada(paciente, local) {
-  const ultimos = JSON.parse(localStorage.getItem('ultimos_chamados') || '[]')
-  const novo = { nome: paciente.nome, prioridade: paciente.prioridade, cpf: paciente.cpf, local }
-  const lista = [novo, ...ultimos.filter(p => p.cpf !== paciente.cpf)].slice(0, 3)
-  localStorage.setItem('ultimos_chamados', JSON.stringify(lista))
+    const ultimos = JSON.parse(localStorage.getItem('ultimos_chamados') || '[]')
+    const novo = { nome: paciente.nome, prioridade: paciente.prioridade, cpf: paciente.cpf, local }
+    const lista = [novo, ...ultimos.filter(p => p.cpf !== paciente.cpf)].slice(0, 3)
+
+    localStorage.setItem('ultimos_chamados', JSON.stringify(lista))
 }
 
 

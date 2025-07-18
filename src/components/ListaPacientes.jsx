@@ -13,17 +13,17 @@ export default function ListaPacientes({ pacientes, titulo, onExcluir, onSelecio
 
     pacientesFiltrados = ordenaByPrioridade(pacientesFiltrados)
 
-  return (
-    <section className="lista-pacientes">
-        { titulo && <Filtro onFiltro={setFiltro} titulo={titulo} filtroSelecionado={filtro} />}
+    return (
+        <section className="lista-pacientes">
+            {titulo && <Filtro onFiltro={setFiltro} titulo={titulo} filtroSelecionado={filtro} />}
 
-        { pacientesFiltrados.length === 0 && <p>Nenhum paciente.</p> }
+            {pacientesFiltrados.length === 0 && <p>Nenhum paciente.</p>}
 
-        {
-            pacientesFiltrados.map((paciente) => (
-                <PacienteCard key={paciente.id} paciente={paciente} {...(onExcluir && { onExcluir: () => onExcluir(paciente.id) })} onSelecionar={() => onSelecionar(paciente.id)} />
-            )) 
-        } 
-    </section >
-  )
+            {
+                pacientesFiltrados.map((paciente) => (
+                    <PacienteCard key={paciente.id} paciente={paciente} {...(onExcluir && { onExcluir: () => onExcluir(paciente.id) })} onSelecionar={() => onSelecionar(paciente.id)} />
+                ))
+            }
+        </section >
+    )
 }

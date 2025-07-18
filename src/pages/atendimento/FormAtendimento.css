@@ -15,26 +15,26 @@
     }
 }
 
-.triagem-detalhe-content {
+.atendimento-detalhe-content {
     animation: fadeInModal 0.3s;
     overflow-y: auto;
     scrollbar-color: #2563eb #e3e9f6;
 }
 
-.triagem-detalhe-content::-webkit-scrollbar {
+.atendimento-detalhe-content::-webkit-scrollbar {
     width: 8px;
     background: #e3e9f6;
     border-radius: 8px;
 }
 
-.triagem-detalhe-content h2 {
+.atendimento-detalhe-content h2 {
     color: var(--primary-blue);
     font-size: 1.7rem;
     font-weight: 800;
     letter-spacing: 0.5px;
 }
 
-.triagem-detalhe-content .paciente-info {
+.atendimento-detalhe-content .paciente-info {
     width: 90%;
     background: #e3e9f6;
     border-radius: 10px;
@@ -51,7 +51,7 @@
     box-shadow: 0 1px 4px #2563eb11;
 }
 
-.triagem-detalhe-content form {
+.atendimento-detalhe-content form {
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -61,7 +61,7 @@
     padding: 0.7rem 1.1rem;
 }
 
-.triagem-detalhe-content .input-row {
+.atendimento-detalhe-content .input-row {
     display: flex;
     gap: 1.3rem;
     flex-wrap: wrap;
@@ -69,7 +69,7 @@
     margin-bottom: 0.7rem;
 }
 
-.triagem-detalhe-content .input-group {
+.atendimento-detalhe-content .input-group {
     flex: 1 1 140px;
     min-width: 120px;
     display: flex;
@@ -78,15 +78,15 @@
     margin-bottom: 0.3rem;
 }
 
-.triagem-detalhe-content label {
+.atendimento-detalhe-content label {
     font-weight: 700;
     margin-bottom: 0.2rem;
     margin-top: 0.2rem;
     color: #234;
 }
 
-.triagem-detalhe-content input,
-.triagem-detalhe-content textarea {
+.atendimento-detalhe-content input,
+.atendimento-detalhe-content textarea {
     padding: 0.7em 1.1em;
     border: 1.5px solid #bcd0f7;
     border-radius: 8px;
@@ -98,8 +98,8 @@
     box-shadow: 0 1px 2px #2563eb11;
 }
 
-.triagem-detalhe-content input[type="number"],
-.triagem-detalhe-content input[type="text"] {
+.atendimento-detalhe-content input[type="number"],
+.atendimento-detalhe-content input[type="text"] {
     padding: 0.7em 1.1em;
     border: 1.5px solid #bcd0f7;
     border-radius: 8px;
@@ -110,32 +110,32 @@
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.triagem-detalhe-content input:focus,
-.triagem-detalhe-content textarea:focus {
+.atendimento-detalhe-content input:focus,
+.atendimento-detalhe-content textarea:focus {
     border-color: var(--primary-blue);
     outline: none;
     box-shadow: 0 0 0 2px #2563eb22;
 }
 
-.triagem-detalhe-content input[type="number"]:focus,
-.triagem-detalhe-content input[type="text"]:focus {
+.atendimento-detalhe-content input[type="number"]:focus,
+.atendimento-detalhe-content input[type="text"]:focus {
     border-color: var(--primary-blue);
     outline: none;
     box-shadow: 0 0 0 2px #2563eb22;
 }
 
-.triagem-detalhe-content input[type="number"]::placeholder,
-.triagem-detalhe-content input[type="text"]::placeholder {
+.atendimento-detalhe-content input[type="number"]::placeholder,
+.atendimento-detalhe-content input[type="text"]::placeholder {
     color: #bbb;
     opacity: 1;
 }
 
-.triagem-detalhe-content textarea::placeholder {
+.atendimento-detalhe-content textarea::placeholder {
     color: #bbb;
     opacity: 1;
 }
 
-.triagem-detalhe-content .cancelar {
+.atendimento-detalhe-content .cancelar {
     width: 80%;
     max-width: 80%;
 
@@ -144,27 +144,27 @@
     transition: color 0.2s, background 0.2s;
 }
 
-.triagem-detalhe-content .cancelar:hover {
+.atendimento-detalhe-content .cancelar:hover {
     color: #e53935;
     background: #fbe9e7;
 }
 
-.triagem-detalhe-content button[type="submit"] {
+.atendimento-detalhe-content button[type="submit"] {
     width: 80%;
     max-width: 80%;
 
     background: var(--secondary-green);
     color: var(--white);
 
-    transition: background 0.2s, transform 0.1s;
+    transition: background 0.2s, transform 0.2s;
     letter-spacing: 0.5px;
 }
 
-.triagem-detalhe-content button[type="submit"]:hover {
+.atendimento-detalhe-content button[type="submit"]:hover {
     background: var(--primary-dark-blue);
 }
 
-.botoes-triagem-row {
+.botoes-atendimento-row {
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
@@ -190,35 +190,35 @@
     gap: 0.4rem;
 }
 
-.botoes-triagem {
+.botoes-atendimento {
     display: flex;
     gap: 0.7rem;
     justify-content: space-between;
 }
 
 
-.salvar-btn-triagem {
+.salvar-btn-atendimento {
     background: var(--primary-blue, #2563eb);
     color: #fff;
     font-weight: 800;
     border: none;
 }
 
-.salvar-btn-triagem:hover,
-.salvar-btn-triagem:focus {
+.salvar-btn-atendimento:hover,
+.salvar-btn-atendimento:focus {
     background: var(--primary-dark-blue, #174ea6);
     color: #fff;
     box-shadow: 0 4px 16px #2563eb33;
     outline: none;
 }
 
-.cancelar-btn-triagem {
+.cancelar-btn-atendimento {
     color: #e53935;
     font-weight: 800;
 }
 
-.cancelar-btn-triagem:hover,
-.cancelar-btn-triagem:focus {
+.cancelar-btn-atendimento:hover,
+.cancelar-btn-atendimento:focus {
     background: #e53935;
     color: #fff;
     border-color: #b71c1c;
@@ -227,37 +227,37 @@
 }
 
 @media (max-width: 600px) {
-    .triagem-detalhe-content {
+    .atendimento-detalhe-content {
         padding: 1.1rem 0.3rem 1.1rem 0.3rem;
     }
 
-    .triagem-detalhe-content .paciente-info {
+    .atendimento-detalhe-content .paciente-info {
         flex-direction: column;
         gap: 0.5rem;
         font-size: 0.98em;
         padding: 0.6rem 0.7rem;
     }
 
-    .triagem-detalhe-content h2 {
+    .atendimento-detalhe-content h2 {
         font-size: 1.2rem;
         padding: 0.3rem 0;
     }
 }
 
 @media (max-width: 700px) {
-    .triagem-detalhe-content form {
+    .atendimento-detalhe-content form {
         padding: 0.7rem 0.2rem 0.7rem 0.2rem;
     }
 
-    .botoes-triagem-row {
+    .botoes-atendimento-row {
         flex-direction: column;
         gap: 0.7rem;
         align-items: stretch;
         justify-content: flex-end;
     }
 
-    .salvar-btn-triagem,
-    .fechar-btn-triagem {
+    .salvar-btn-atendimento,
+    .fechar-btn-atendimento {
         min-width: 100%;
         max-width: 100%;
         align-self: stretch;

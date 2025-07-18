@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getPacientes } from "../utils/dados"
 
+
 export default function SintuacaoPaciente() {
     const [paciente, setPaciente] = useState({})
 
@@ -12,7 +13,7 @@ export default function SintuacaoPaciente() {
         setPaciente(paciente)
     }, [])
 
-    return(
+    return (
         <main>
             <h2>Situação do Paciente</h2>
 
@@ -23,7 +24,7 @@ export default function SintuacaoPaciente() {
             {
                 paciente.triagem && <p>Paciente já foi triado</p>
             }
-            
+
             <p>Nome: {paciente.nome}</p>
             <p>CPF: {paciente.cpf}</p>
             <p>Telefone: {paciente.telefone}</p>
